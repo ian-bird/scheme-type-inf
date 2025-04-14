@@ -115,3 +115,5 @@
 
 (define (reduce-1 proc seq)
   (reduce proc (car seq) (cdr seq)))
+
+(define funcall (lambda fn-and-args (apply (car fn-and-args) (cdr fn-and-args))))
