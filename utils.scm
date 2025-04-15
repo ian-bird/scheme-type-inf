@@ -72,6 +72,11 @@
       base
       (reduce proc (proc base (car seq)) (cdr seq))))
 
+(define (flip f) (lambda (a b) (f b a)))
+
+(define (foldr proc base seq)
+  (reverse (reduce (flip proc) base seq)))
+
 (define (count seq)
   (define (count-tco seq acc)
     (if (null? seq)
@@ -117,3 +122,11 @@
   (reduce proc (car seq) (cdr seq)))
 
 (define funcall (lambda fn-and-args (apply (car fn-and-args) (cdr fn-and-args))))
+
+(define (flatten seq)
+  (foldr (lambda (e acc)
+	    (if (list? e)
+		(append (flatten e) acc)
+		(cons e acc)))
+	  '()
+	  seq))

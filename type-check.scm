@@ -146,6 +146,36 @@
 
 (define (groups<- to-convert) (valid-groups (type-facts) to-convert))
 
+;; removes repeated data and reformats output as a list of vars consed to
+;; the valid types for those vars
+(define (organize-output valid-groups)
+  (map (lambda (var)
+	 (cons var
+	       (reject var?
+		       (uniq
+			(map (lambda (e) (if (bool? e)
+					     'bool
+					     e))
+			     (apply append
+				    (filter (lambda (group) (contains? group var))
+					    (apply append valid-groups))))))))
+       (uniq (filter var? (flatten valid-groups)))))
+;; this is too complex. what are the actual steps?
+;; get all the vars.
+;; go through each group theyre in.
+;; collect the types it could be in each one
+;; groups with no concrete type are any types
+;;
+;; we still want some way to be able to mark that two variables are always related -- how?
+;;     > perhaps by adding the variable in the type list for each arg???
+;; this is important because it allows us to make deductions about output types sometimes.
+;;
+;; we only need to add the var type if the association is present in every group.
+;; on the other hand, a type needs to be added even if it only appears in one group.
+
+
+
+;; output = (((?result nil) (?a) (#t)) (?result) (nil ?a) (#f))
 (define (type-check lambda-form) 
   (remove-gensym-vars
    (logic<- 
