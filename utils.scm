@@ -75,7 +75,7 @@
 (define (flip f) (lambda (a b) (f b a)))
 
 (define (foldr proc base seq)
-  (reverse (reduce (flip proc) base seq)))
+  (reduce (flip proc) base (reverse seq)))
 
 (define (count seq)
   (define (count-tco seq acc)
