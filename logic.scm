@@ -73,13 +73,13 @@
                              groups-b))
                 groups-a)))
 
-(define logic-and (lambda args (reduce-1 logic-and2 args)))
+(define (logic-and . args) (reduce-1 logic-and2 args))
 
 ;; since either group satisfies the or, just pass both through unmodified 
 (define (logic-or2 groups-a groups-b)
   (map uniq (append groups-a groups-b)))
 
-(define logic-or (lambda args (reduce-1 logic-or2 args)))
+(define (logic-or . args) (reduce-1 logic-or2 args))
 
 (define (gensym-var? v)
   (if (symbol? v)

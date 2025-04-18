@@ -1,9 +1,5 @@
-(define partial 
-  (lambda fn-and-args
-    (lambda rest-of-args
-      (apply (car fn-and-args)
-             (append (cdr fn-and-args)
-                     rest-of-args)))))
+(define (partial fn . args)
+  (lambda rest (apply fn (append args rest))))
 
 (define (identity x) x)
 
@@ -51,13 +47,14 @@
 (define (distinct? items)
   (equal? (distinct items) items))
 
-(define zip
-  (lambda lists
-    (if (any? null? lists)
-        '()
-        (cons (map car lists) 
-              (apply zip 
-                     (map lazy-cdr lists))))))
+
+
+(define (zip lists)
+  (if (any? null? lists)
+      '()
+      (cons (map car lists) 
+            (apply zip 
+                   (map lazy-cdr lists)))))
 
 (define (mapcat proc seq)
   (apply append (map proc seq)))
@@ -121,7 +118,7 @@
 (define (reduce-1 proc seq)
   (reduce proc (car seq) (cdr seq)))
 
-(define funcall (lambda fn-and-args (apply (car fn-and-args) (cdr fn-and-args))))
+(define (funcall fn . args) (apply fn args))
 
 (define (flatten seq)
   (foldr (lambda (e acc)
