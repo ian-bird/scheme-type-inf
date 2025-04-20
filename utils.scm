@@ -127,3 +127,18 @@
 		(cons e acc)))
 	  '()
 	  seq))
+
+(define (constantly x)
+  (lambda (_) x))
+
+(define (permutation? a b)
+  (cond ((and (null? a) (null? b)) #t)
+	((or (null? a) (null? b)) #f)
+	((contains? b (car a))
+	 (permutation? (cdr a)
+		       (let* ((num-removing (count (filter (partial eq? (car a)) b)))
+			      (add-on (take (- num-removing 1)
+			  		    (lazy-map (constantly (car a)) (range)))))
+			 (append add-on (remove (partial eq? (car a)) b)))))
+	(else #f)))
+
