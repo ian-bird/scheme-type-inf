@@ -49,7 +49,7 @@
 
 
 
-(define (zip lists)
+(define (zip . lists)
   (if (any? null? lists)
       '()
       (cons (map car lists) 

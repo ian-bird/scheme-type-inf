@@ -147,10 +147,12 @@
 
 (define (groups<- to-convert) (valid-groups (type-facts) to-convert))
 
+;; takes the choices and groups and reformats as a list of valid type signatures
+;; for the various variables.
 (define (format-output original-form choices)
   (let* ((add-anys (lambda (group)
 		     (if (every? var? group)
-			 (cons (new-var) group)
+			 (cons (gensym) group)
 			 group)))
 	 (vars  (append (map var<-symbol (cadr  original-form))
 			'(?result)))
