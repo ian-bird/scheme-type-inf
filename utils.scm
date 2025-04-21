@@ -62,7 +62,7 @@
 (define (nth form n)
   (if (= n 0)
       (car form)
-      (nth (cdr form) (- n 1))))
+      (nth (lazy-cdr form) (- n 1))))
 
 (define (reduce proc base seq)
   (if (null? seq)
@@ -142,3 +142,15 @@
 			 (append add-on (remove (partial eq? (car a)) b)))))
 	(else #f)))
 
+(define (string<- x)
+  (cond ((list? x) (apply string-append
+			  `( "(" ,@(map string<- x) ")")))
+	((pair? x) (string-append "("
+				  (string<- (car x))
+				  " . "
+				  (string<- (cdr x))
+				  ")"))
+	((number? x) (number->string x))
+	((string? x) (string-append "\"" x "\""))
+	((bool? x) (boolean->string x))
+	((symbol? x) (symbol->string x))))
