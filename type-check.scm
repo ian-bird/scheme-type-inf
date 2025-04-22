@@ -215,8 +215,6 @@
 		   vars)))))
     (map convert-choice choices)))
 
-
-
 (define (type-signatures lambda-form)
   (format-output lambda-form
 		 (remove-gensym-vars
@@ -225,3 +223,6 @@
 		    (variablize-args
 		     lambda-form))
 		   '?result))))
+
+(define (extend-facts facts lambda-form name)
+  (append facts (map (partial cons name) (type-signatures lambda-form))))
