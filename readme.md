@@ -12,7 +12,7 @@ This is a static type checker for scheme that runs against the classical collect
 9. quote
 
 The type checker uses an inference algorithm to deduce the types of
-variables from how they're being used, and can generate errors if
+variables from how they're being used and can generate errors if
 they're being used incorrectly. It also works to generate type
 signatures for lambdas, with the future expectation that it can be
 used to expand the list of functions that the type checker can analyze
@@ -37,8 +37,8 @@ The type checker prints an error since the deduced type of fn for seq from
 ;
 ; note: gensyms represent "any", as in, any type is valid when checked against them.
 ```
-nevertheless, a signature is generated since as long as seq is nil, the type error can
-be avoided, any any caller that satisifies that signature can be guaranteed to not 
+Nevertheless, a signature is generated since as long as seq is nil, the type error can
+be avoided, and any caller that satisifies that signature can be guaranteed to not 
 encounter a type error at runtime.
 
 When we run it again after fixing the type error we get the following response:
@@ -57,7 +57,7 @@ When we run it again after fixing the type error we get the following response:
 ```
 
 In this case, two valid type signatures are generated, to account for
-the valid possible types for seq. This format was seleected since it
+the valid possible types for seq. This format was selected since it
 allows for easier checking of arguments and extension of the type checker in the future.
 
 # Plans
@@ -65,7 +65,7 @@ allows for easier checking of arguments and extension of the type checker in the
 I'm at a bit of a roadblock with this for now, it's at a point where
 it's capable of actually deducing types, but relying on them seems a
 bit risky. The fact that the entire signature of a function can be
-redefined at runtime in a completely undecideable manner (i.e. a user
+redefined at runtime in a completely undecidable manner (i.e. a user
 defining new functions through a repl) means that redefining cons, for
 instance, could force every single compiled function to have to
 recompile to determine if it needs to switch between a dynamically
