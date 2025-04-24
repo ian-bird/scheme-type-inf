@@ -27,26 +27,26 @@ The type checker prints an error since the deduced type of fn for seq from
 `(seq)` clashes with its use as the argument to `cdr`:
 ```lisp
 (type-check '(lambda (seq acc)
-               (if (eq? '() seq) 
+               (if (eq? '() seq)
 			       acc
-				   (reverse (cdr seq) 
+				   (reverse (cdr seq)
 				            (cons (seq) acc)))))
 
 ; WARNING: type error: (reverse (cdr ?seq) (cons (?seq) ?acc))
-; => (((?seq nil) (?acc #:g201) (?result #:g201)))							
+; => (((?seq nil) (?acc #:g201) (?result #:g201)))
 ;
 ; note: gensyms represent "any", as in, any type is valid when checked against them.
 ```
 nevertheless, a signature is generated since as long as seq is nil, the type error can
-be avoided, any any caller that satisifies that signature can be guaranteed to not 
+be avoided, any any caller that satisifies that signature can be guaranteed to not
 encounter a type error at runtime.
 
 When we run it again after fixing the type error we get the following response:
 ```lisp
-(type-check '(lambda (seq acc) 
-               (if (eq? '() seq) 
+(type-check '(lambda (seq acc)
+               (if (eq? '() seq)
 			       acc
-				   (reverse (cdr seq) 
+				   (reverse (cdr seq)
 				            (cons (car seq) acc)))))
 ; => (((?seq pair)
 ;      (?acc #:g420)
@@ -57,7 +57,7 @@ When we run it again after fixing the type error we get the following response:
 ```
 
 In this case, two valid type signatures are generated, to account for
-the valid possible types for seq. This format was seleected since it
+the valid possible types for seq. This format was selected since it
 allows for easier checking of arguments and extension of the type checker in the future.
 
 # Plans
