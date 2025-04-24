@@ -224,5 +224,3 @@
 		     lambda-form))
 		   '?result))))
 
-(define (extend-facts facts lambda-form name)
-  (append facts (map (partial cons name) (type-signatures lambda-form))))
