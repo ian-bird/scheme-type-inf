@@ -1,6 +1,6 @@
 # Overview
 
-This is a static type checker for scheme that runs against the classical collection of lisp functions:
+This is a static type checker for scheme that runs against the original set of lisp functions:
 1. atom?
 2. car
 3. cdr
@@ -65,7 +65,7 @@ allows for easier checking of arguments and extension of the type checker in the
 I'm at a bit of a roadblock with this for now, it's at a point where
 it's capable of actually deducing types, but relying on them seems a
 bit risky. The fact that the entire signature of a function can be
-redefined at runtime in a completely undecideable manner (i.e. a user
+redefined at runtime in a completely undecideable manner (e.g. a user
 defining new functions through a repl) means that redefining cons, for
 instance, could force every single compiled function to have to
 recompile to determine if it needs to switch between a dynamically
